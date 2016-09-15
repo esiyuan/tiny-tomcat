@@ -12,7 +12,7 @@ public class Client {
 		Socket socket = new Socket("127.0.0.1", 8080);
 		boolean autoflush = true;
 		PrintWriter out = new PrintWriter(socket.getOutputStream(), autoflush);
-		out.println("GET /hello.html HTTP/1.1");
+		out.println("GET /servlet/HelloServlet HTTP/1.1");
 		BufferedReader in = IOUtil.getBufferedReader(socket.getInputStream());
 		String buff;
 		while((buff = in.readLine()) != null)

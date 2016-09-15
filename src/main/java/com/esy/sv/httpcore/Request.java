@@ -1,16 +1,23 @@
-package com.esy.sv;
+package com.esy.sv.httpcore;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 
 import com.esy.sv.common.IOUtil;
+import com.esy.sv.httpcore.fade.RequestFade;
 
-public class Request {
+/**
+ * 通过RequestFade 类实现HttpServletRequest接口 
+ * 此类再继承，避免项目接口污染，使代码更加清晰
+ * @author guanjie
+ *
+ */
+public class Request extends RequestFade{
 
 	private InputStream inputStream;
 	private String uri;
-
+	
 	public Request(InputStream inputStream) {
 		this.inputStream = inputStream;
 	}
@@ -18,6 +25,11 @@ public class Request {
 		BufferedReader reader = IOUtil.getBufferedReader(inputStream);
 		String requestString = reader.readLine();
 		this.uri = parseUri(requestString);
+	}
+	
+	@Override
+	public String getServerName() {
+		return uri.substring(uri.lastIndexOf("/") + 1);
 	}
 	/**
 	 * 解析http协议 的uri
@@ -38,9 +50,6 @@ public class Request {
 	
 	public String getUri() {
 		return uri;
-	}
-	public void setUri(String uri) {
-		this.uri = uri;
 	}
 	
 	
