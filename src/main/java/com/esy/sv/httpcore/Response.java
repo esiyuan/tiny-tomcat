@@ -33,7 +33,7 @@ public class Response extends ResponseFade{
 	}
 	
 	public void process() throws ServletException, IOException {
-		if(request.getUri().startsWith("/servlet/")) {
+		if(request.getRequestURI().startsWith("/servlet/")) {
 			ServletProcessor processor = new ServletProcessor();
 			processor.process(request, this);
 		} else {
@@ -47,7 +47,7 @@ public class Response extends ResponseFade{
 	}
 	
 	private void sendStaticResource() throws IOException {
-		File file = new File(Constants.WEB_ROOT, request.getUri());
+		File file = new File(Constants.WEB_ROOT, request.getRequestURI());
 		if (file.exists()) {
 			sendFile(file);
 		} else {
