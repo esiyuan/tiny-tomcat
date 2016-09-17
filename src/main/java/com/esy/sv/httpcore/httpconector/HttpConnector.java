@@ -44,7 +44,7 @@ public class HttpConnector implements Runnable{
 	
 	private final static StringManager sm = StringManager.getManager(Constants.HTTPCORE_PACKAGE_NAME);
 	
-	public void recycle(HttpProcessor processor) {
+	public synchronized void recycle(HttpProcessor processor) {
 		processors.push(processor);
 	}
 	
