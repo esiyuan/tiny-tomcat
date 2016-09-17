@@ -1,4 +1,4 @@
-package com.esy.sv.httpcore.fade;
+package com.esy.sv.httpcore.httpfade;
 
 import java.io.BufferedReader;
 import java.io.IOException;

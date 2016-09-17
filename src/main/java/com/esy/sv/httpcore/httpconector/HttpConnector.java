@@ -12,20 +12,37 @@ import com.esy.sv.common.Constants;
 import com.esy.sv.common.Stack;
 import com.esy.sv.common.StringManager;
 import com.esy.sv.common.TomcatException;
+import com.esy.sv.httpcore.Connector;
+import com.esy.sv.httpcore.Container;
+import com.esy.sv.httpcore.Lifecycle;
 /**
  * 接受请求和处理请求在同一个线程，那么会阻塞并发请求，使得系统吞吐率低下
  * 为了进一步实现高效的服务器程序，需要把费时的处理操作单独分离出去，作为独立的线程
  * @author guanjie
  *
  */
-public class HttpConnector implements Runnable{
+public class HttpConnector implements Connector, Lifecycle, Runnable{
 
 	private static Logger logger = Logger.getLogger(HttpConnector.class);
 	private static ServerSocket serverSocket;
 	private int port;
 	private String host;
-
 	
+	private Container container;
+	public void stop() {
+		throw new UnsupportedOperationException();
+	}
+
+
+	@Override
+	public Container getContainer() {
+		return container;
+	}
+	@Override
+	public void setContainer(Container container) {
+		this.container = container;
+	}
+
 	public HttpConnector(String host, int port) {
 		this.host = host;
 		this.port = port;
@@ -73,7 +90,7 @@ public class HttpConnector implements Runnable{
 		}
 	}
 	
-	
+	@Override
 	public void start() throws TomcatException {
 		if(started)
 			throw new TomcatException(sm.getString("httpConnector.alreadyStarted"));
@@ -84,7 +101,7 @@ public class HttpConnector implements Runnable{
 		thread.start();
 		logger.info(sm.getString("httpConnector.starting"));
 	}
-	
+	@Override
 	public void initialize() throws TomcatException, UnknownHostException, IOException {
 		if(initialized)
 			throw new TomcatException(sm.getString("httpConnector.alreadyInitialized"));

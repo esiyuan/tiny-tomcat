@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import com.esy.sv.common.Constants;
 import com.esy.sv.common.StringManager;
 import com.esy.sv.common.TomcatException;
-import com.esy.sv.httpcore.Request;
-import com.esy.sv.httpcore.Response;
+import com.esy.sv.httpcore.httpfade.Request;
+import com.esy.sv.httpcore.httpfade.Response;
 
 public class HttpProcessor implements Runnable{
 	
@@ -59,7 +59,7 @@ public class HttpProcessor implements Runnable{
     	Request request = new Request(socket.getInputStream());
 		request.parse();
 		Response response = new Response(request, socket.getOutputStream());
-		response.process();
+		connector.getContainer().invoke(request, response);
 		socket.close();
 		connector.recycle(this);
     }

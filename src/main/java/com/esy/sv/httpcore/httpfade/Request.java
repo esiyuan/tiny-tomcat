@@ -1,4 +1,4 @@
-package com.esy.sv.httpcore;
+package com.esy.sv.httpcore.httpfade;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.esy.sv.common.IOUtil;
-import com.esy.sv.httpcore.fade.RequestFade;
 
 /**
  * 通过RequestFade 类实现HttpServletRequest接口 ，此类再继承，避免项目接口污染，使代码更加清晰
