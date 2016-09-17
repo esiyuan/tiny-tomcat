@@ -44,7 +44,7 @@ public class HttpConnector implements Runnable{
 	
 	private final static StringManager sm = StringManager.getManager(Constants.HTTPCORE_PACKAGE_NAME);
 	
-	public synchronized void recycle(HttpProcessor processor) {
+	public void recycle(HttpProcessor processor) {
 		processors.push(processor);
 	}
 	
@@ -82,7 +82,7 @@ public class HttpConnector implements Runnable{
 		Thread thread = new Thread(this, threadName);
 		thread.setDaemon(true);
 		thread.start();
-//		logger.info(sm.getString("httpConnector.starting"));
+		logger.info(sm.getString("httpConnector.starting"));
 	}
 	
 	public void initialize() throws TomcatException, UnknownHostException, IOException {
