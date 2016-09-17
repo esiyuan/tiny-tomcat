@@ -23,7 +23,7 @@ public class Stack<E> {
      * @return  the <code>item</code> argument.
      * @see     java.util.Vector#addElement
      */
-    public E push(E item) {
+    public synchronized E push(E item) {
     	list.push(item);
         return item;
     }
@@ -39,7 +39,7 @@ public class Stack<E> {
      *          of the <tt>Vector</tt> object).
      * @throws  EmptyStackException  if this stack is empty.
      */
-    public E pop() {
+    public synchronized E pop() {
     	return list.pop();
     }
 
