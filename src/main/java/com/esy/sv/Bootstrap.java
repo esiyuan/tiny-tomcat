@@ -1,10 +1,14 @@
 package com.esy.sv;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
-
-import com.esy.sv.common.TomcatException;
-import com.esy.sv.httpcore.container.ServletContainer;
+import com.esy.sv.httpcore.Contained;
+import com.esy.sv.httpcore.Pipeline;
+import com.esy.sv.httpcore.Valve;
+import com.esy.sv.httpcore.Wrapper;
+import com.esy.sv.httpcore.container.ServletVavle;
+import com.esy.sv.httpcore.container.SimpleLoader;
+import com.esy.sv.httpcore.container.SimplePipeline;
+import com.esy.sv.httpcore.container.SimpleValve;
+import com.esy.sv.httpcore.container.SimpleWrapper;
 import com.esy.sv.httpcore.httpconector.HttpConnector;
 
 /**
@@ -18,16 +22,25 @@ public final class Bootstrap {
 	public static void main(String[] args) {
 		try {
 			HttpConnector connector = new HttpConnector("localhost", 8080);
-			ServletContainer container = new ServletContainer();
-			connector.setContainer(container);
+			Wrapper wrapper = new SimpleWrapper();
+			
+			wrapper.setLoader(new SimpleLoader());
+			wrapper.setServletClass("HelloServlet");
+			
+			Pipeline pipeline = new SimplePipeline(wrapper);
+			ServletVavle servletVavle = new ServletVavle(wrapper);
+			pipeline.setBasic(servletVavle);
+			
+			Valve valve = new SimpleValve();
+			((Contained)valve).setContainer(wrapper);
+			pipeline.addValve(valve);
+			wrapper.setPipeline(pipeline);
+			connector.setContainer(wrapper);
+			
 			connector.initialize();
 			connector.start();
 			System.in.read();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (TomcatException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
