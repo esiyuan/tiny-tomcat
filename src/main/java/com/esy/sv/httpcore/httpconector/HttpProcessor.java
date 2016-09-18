@@ -56,12 +56,15 @@ public class HttpProcessor implements Runnable{
     }
     
     private void process(Socket socket) throws IOException, ServletException {
-    	Request request = new Request(socket.getInputStream());
-		request.parse();
-		Response response = new Response(request, socket.getOutputStream());
-		connector.getContainer().invoke(request, response);
-		socket.close();
-		connector.recycle(this);
+    	try {
+    		Request request = new Request(socket.getInputStream());
+    		request.parse();
+    		Response response = new Response(request, socket.getOutputStream());
+    		connector.getContainer().invoke(request, response);
+		} finally {
+			socket.close();
+			connector.recycle(this);
+		}
     }
     
 	@Override
