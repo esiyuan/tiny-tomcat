@@ -29,6 +29,7 @@ public class SimpleValve implements Valve, Contained{
 	@Override
 	public void invoke(Request request, Response response, ValveContext context)
 			throws IOException, ServletException {
+		System.out.println("SimpleValve.invoke()");
 		context.invokeNext(request, response);
 	}
 	

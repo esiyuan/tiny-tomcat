@@ -53,7 +53,6 @@ public class SimplePipeline implements Pipeline{
 	@Override
 	public void invoke(Request request, Response response) throws IOException,
 			ServletException {
-		System.out.println(Arrays.toString(valves));
 		(new SimplePipelineValveContext()).invokeNext(request, response);
 	}
 
