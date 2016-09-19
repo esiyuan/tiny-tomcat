@@ -2,6 +2,8 @@ package com.esy.sv.common;
 
 public class TomcatException extends Exception{
 
+	private static final long serialVersionUID = 7889385916668835592L;
+
 	public TomcatException() {
 		super();
 		// TODO Auto-generated constructor stub

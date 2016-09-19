@@ -1,7 +1,6 @@
 package com.esy.sv.httpcore.container;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.servlet.ServletException;
 
