@@ -15,7 +15,7 @@ import com.esy.sv.common.IOUtil;
 import com.esy.sv.httpcore.fade.ResponseFade;
 
 /**
- * 类同request
+ * 简单的response对象，负责请求返回处理
  * @author guanjie
  *
  */

@@ -10,7 +10,11 @@ import javax.servlet.ServletException;
 import com.esy.sv.common.Constants;
 import com.esy.sv.httpcore.Request;
 import com.esy.sv.httpcore.Response;
-
+/**
+ * servlet请求处理
+ * @author guanjie
+ *
+ */
 public class ServletProcessor {
 	
 	public void process(Request request, Response response) throws ServletException, IOException{

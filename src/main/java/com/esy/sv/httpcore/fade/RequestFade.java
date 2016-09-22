@@ -23,7 +23,7 @@ public class RequestFade implements HttpServletRequest{
 	}
 
 	@Override
-	public Enumeration getAttributeNames() {
+	public Enumeration<?> getAttributeNames() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -66,7 +66,7 @@ public class RequestFade implements HttpServletRequest{
 	}
 
 	@Override
-	public Enumeration getParameterNames() {
+	public Enumeration<?> getParameterNames() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -78,7 +78,7 @@ public class RequestFade implements HttpServletRequest{
 	}
 
 	@Override
-	public Map getParameterMap() {
+	public Map<?, ?> getParameterMap() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -144,7 +144,7 @@ public class RequestFade implements HttpServletRequest{
 	}
 
 	@Override
-	public Enumeration getLocales() {
+	public Enumeration<?> getLocales() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -216,13 +216,13 @@ public class RequestFade implements HttpServletRequest{
 	}
 
 	@Override
-	public Enumeration getHeaders(String name) {
+	public Enumeration<?> getHeaders(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Enumeration getHeaderNames() {
+	public Enumeration<?> getHeaderNames() {
 		// TODO Auto-generated method stub
 		return null;
 	}

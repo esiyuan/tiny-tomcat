@@ -15,7 +15,7 @@ import com.esy.sv.httpcore.Response;
 
 /**
  * 简单处理http请求的服务器(ServerSocket/Socket 是建立在可靠的传输层协议tcp基础上的抽象的通信接口)
- * 增加了动态响应的功能，及简单的单线程servlet响应 
+ * 次节--增加了动态响应的功能，及简单的单线程servlet响应 
  * @author guanjie
  *
  */
@@ -51,7 +51,11 @@ public class HttpServer {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * 处理客户端连接请求
+	 * @throws IOException
+	 * @throws ServletException
+	 */
 	private void handlerRequest() throws IOException, ServletException {
 		while(true) {
 			Socket socket = serverSocket.accept();
@@ -63,7 +67,11 @@ public class HttpServer {
 			socket.close();
 		}
 	}
-
+	/**
+	 * 创建监听服务器端口的ServerSocket
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	private void createServer() throws UnknownHostException, IOException {
 		if (serverSocket == null) {
 			synchronized (this) {
