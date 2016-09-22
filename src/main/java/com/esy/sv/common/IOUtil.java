@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 
-public class IOUtil {
+public final class IOUtil {
 
 	private IOUtil() {
 	}

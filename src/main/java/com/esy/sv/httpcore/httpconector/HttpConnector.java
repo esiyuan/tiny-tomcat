@@ -41,7 +41,16 @@ public class HttpConnector implements Runnable{
 	private boolean started;
 	
 	private String threadName ;
-	
+	/**
+	 * 设置最大处理器数量
+	 * @param maxProcessors
+	 * throw IllegalArgumentException if max < 0
+	 */
+	public void setMaxProcessors(int maxProcessors) {
+		if(maxProcessors < 0)
+			throw new IllegalArgumentException();
+		this.maxProcessors = maxProcessors;
+	}
 	private final static StringManager sm = StringManager.getManager(Constants.HTTPCORE_PACKAGE_NAME);
 	
 	public void recycle(HttpProcessor processor) {
@@ -73,7 +82,10 @@ public class HttpConnector implements Runnable{
 		}
 	}
 	
-	
+	/**
+	 * 启动连接器
+	 * @throws TomcatException
+	 */
 	public void start() throws TomcatException {
 		if(started)
 			throw new TomcatException(sm.getString("httpConnector.alreadyStarted"));
@@ -84,14 +96,19 @@ public class HttpConnector implements Runnable{
 		thread.start();
 		logger.info(sm.getString("httpConnector.starting"));
 	}
-	
+	/**
+	 * 初始化连接处理器
+	 * @throws TomcatException
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 */
 	public void initialize() throws TomcatException, UnknownHostException, IOException {
 		if(initialized)
 			throw new TomcatException(sm.getString("httpConnector.alreadyInitialized"));
 		initialized = true;
 		createServer();
 		while (curProcessors < minProcessors) {
-			if ((maxProcessors > 0) && (curProcessors >= maxProcessors))
+			if (curProcessors >= maxProcessors)
 				break;
 			HttpProcessor processor = newProcessor();
 			recycle(processor);
@@ -111,15 +128,10 @@ public class HttpConnector implements Runnable{
 	private HttpProcessor getProcessor() {
 		if (processors.size() > 0)
 			return processors.pop();
-		if ((maxProcessors > 0) && (curProcessors < maxProcessors)) {
+		if (curProcessors < maxProcessors) {
 			return newProcessor();
-		} else {
-			if (maxProcessors < 0) {
-				return newProcessor();
-			} else {
-				return (null);
-			}
-	}
+		}  
+		return (null);
 	}
 	
 	private HttpProcessor newProcessor() {

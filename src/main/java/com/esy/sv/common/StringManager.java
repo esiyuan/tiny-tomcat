@@ -19,13 +19,13 @@ public class StringManager {
 	}
 	
 	
-	private static ConcurrentHashMap<String, StringManager> stringManagerCache = new ConcurrentHashMap<>();
+	private static ConcurrentHashMap<String, StringManager> managers = new ConcurrentHashMap<>();
 
 	public static StringManager getManager(String packageName) {
-		StringManager mgr = (StringManager) stringManagerCache.get(packageName);
+		StringManager mgr = (StringManager) managers.get(packageName);
 		if (mgr == null) {
 			mgr = new StringManager(packageName);
-			StringManager oldmgr = stringManagerCache.putIfAbsent(packageName, mgr);
+			StringManager oldmgr = managers.putIfAbsent(packageName, mgr);
 			if(oldmgr != null)
 				return oldmgr;
 		} 
