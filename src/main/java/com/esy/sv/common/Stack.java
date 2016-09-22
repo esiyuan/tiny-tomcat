@@ -28,7 +28,7 @@ public class Stack<E> {
         return item;
     }
 
-    public int size() {
+    public synchronized int size() {
     	return list.size();
     }
     /**
