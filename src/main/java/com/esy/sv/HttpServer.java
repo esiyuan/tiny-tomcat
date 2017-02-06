@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 import org.apache.log4j.Logger;
 
 /**
- * 简单处理http请求的服务器(ServerSocket/Socket 是建立在可靠的传输层协议tcp基础上的抽象的通信接口)
+ * 简单处理http请求的服务器
  * 
  * @author guanjie
  *

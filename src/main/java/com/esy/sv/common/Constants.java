@@ -11,7 +11,7 @@ public class Constants {
 	 *  参数为'/'返回/D:/codingspace/spare_workspace/tiny-tomcat/target/classes 类根路径路径
 	 *  参数为 ''时返回/D:/codingspace/spare_workspace/tiny-tomcat/target/classes/com/esy/sv/common 当前目录
 	 */
-	public static final String WEB_ROOT = Constants.class.getResource("").getPath() + "web_root";
+	public static final String WEB_ROOT = Constants.class.getResource("/").getPath() + "web_root";
 	
 	public static final int BUFFER_SIZE = 1024;
 	
