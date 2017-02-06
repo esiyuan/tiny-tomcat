@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
  * @author guanjie
  *
  */
-public class HttpServer {
+public class HttpServer { 
 	
 	private static Logger logger = Logger.getLogger(HttpServer.class);
 	

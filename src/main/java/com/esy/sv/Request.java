@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.esy.sv.common.IOUtil;
-
+/**
+ * 请求类，解析http请求信息
+ * @author guanjie
+ *
+ */
 public class Request {
 
 	private InputStream inputStream;
