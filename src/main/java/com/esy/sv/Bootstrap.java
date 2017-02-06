@@ -17,7 +17,7 @@ public final class Bootstrap {
 		try {
 			connector.initialize();
 			connector.start();
-			System.in.read();
+			System.in.read(); //连接器线程，让主线程挂起，保证其他后台线程运行
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (TomcatException e) {

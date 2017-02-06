@@ -20,22 +20,17 @@ public class HttpProcessor implements Runnable{
 	
 	private final int id;
 	
-	private boolean started;
 	public HttpProcessor(HttpConnector connector, int id) {
 		this.connector = connector;
 		this.id = id;
 	}
 	
-	private boolean stoped;
 	private static StringManager sm = StringManager.getManager(Constants.HTTPCORE_PACKAGE_NAME);
 	
     private Socket socket;
     private boolean newSocketCome;
     
     public void start() throws TomcatException {
-        if (started)
-            throw new TomcatException(sm.getString("httpProcessor.alreadyStarted"));
-        started = true;
         logger.info(sm.getString("httpProcessor.starting") + " HttpProcessor " + id);
         Thread thread = new Thread(this, "HttpProcessor " + id);
         thread.setDaemon(true);
@@ -66,22 +61,19 @@ public class HttpProcessor implements Runnable{
     
 	@Override
 	public void run() {
-		while(!stoped) {
-			Socket socket = waitingToNewSocket();
-			try {
+		try {
+			while(!Thread.interrupted()) {
+				Socket socket = waitingToNewSocket();
 				process(socket);
-			} catch (IOException | ServletException e) {
-				e.printStackTrace();
 			}
+		} catch (InterruptedException | IOException | ServletException e) {
+			System.out.println("处理器异常。。。");
 		}
 	}
 	
-	private synchronized Socket waitingToNewSocket() {
+	private synchronized Socket waitingToNewSocket() throws InterruptedException {
         while (!newSocketCome) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-            }
+        	wait();
         }
         Socket socket = this.socket;
         newSocketCome = false;

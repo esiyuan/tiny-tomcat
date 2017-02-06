@@ -9,7 +9,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 
 import com.esy.sv.common.IOUtil;
-import com.esy.sv.httpcore.fade.RequestFade;
+import com.esy.sv.httpcore.facade.RequestFacade;
 
 /**
  * 通过RequestFade 类实现HttpServletRequest接口 ，此类再继承，避免项目接口污染，使代码更加清晰
@@ -21,7 +21,7 @@ import com.esy.sv.httpcore.fade.RequestFade;
  * 本程序为了模拟tomcat实现，没有完全的实现请求信息的解析，有兴趣的可以去看tomcat源码
  * @author guanjie
  */
-public class Request extends RequestFade{
+public class Request extends RequestFacade{
 	
 	private static Logger logger = Logger.getLogger(Request.class);
 	

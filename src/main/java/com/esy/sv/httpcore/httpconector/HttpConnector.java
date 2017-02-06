@@ -37,9 +37,6 @@ public class HttpConnector implements Runnable{
 	private int minProcessors = 5;
 	private int maxProcessors = 20;
 	
-	private boolean initialized;
-	private boolean started;
-	
 	private String threadName ;
 	/**
 	 * 设置最大处理器数量
@@ -87,25 +84,19 @@ public class HttpConnector implements Runnable{
 	 * @throws TomcatException
 	 */
 	public void start() throws TomcatException {
-		if(started)
-			throw new TomcatException(sm.getString("httpConnector.alreadyStarted"));
 		threadName = "HttpConnector[" + port + "]";
-		started = true;
 		Thread thread = new Thread(this, threadName);
 		thread.setDaemon(true);
 		thread.start();
 		logger.info(sm.getString("httpConnector.starting"));
 	}
 	/**
-	 * 初始化连接处理器
+	 * 初始化连接处理器和处理器
 	 * @throws TomcatException
 	 * @throws UnknownHostException
 	 * @throws IOException
 	 */
 	public void initialize() throws TomcatException, UnknownHostException, IOException {
-		if(initialized)
-			throw new TomcatException(sm.getString("httpConnector.alreadyInitialized"));
-		initialized = true;
 		createServer();
 		while (curProcessors < minProcessors) {
 			if (curProcessors >= maxProcessors)
