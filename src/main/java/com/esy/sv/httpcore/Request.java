@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import com.esy.sv.common.IOUtil;
-import com.esy.sv.httpcore.fade.RequestFade;
+import com.esy.sv.httpcore.facade.RequestFacade;
 
 /**
  * 通过RequestFade 类实现HttpServletRequest接口 
@@ -13,7 +13,7 @@ import com.esy.sv.httpcore.fade.RequestFade;
  * @author guanjie
  *
  */
-public class Request extends RequestFade{
+public class Request extends RequestFacade{
 
 	private InputStream inputStream;
 	private String uri;

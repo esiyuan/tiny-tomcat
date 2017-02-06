@@ -12,14 +12,14 @@ import javax.servlet.ServletException;
 import com.esy.sv.ServletProcessor;
 import com.esy.sv.common.Constants;
 import com.esy.sv.common.IOUtil;
-import com.esy.sv.httpcore.fade.ResponseFade;
+import com.esy.sv.httpcore.facade.ResponseFacade;
 
 /**
  * 简单的response对象，负责请求返回处理
  * @author guanjie
  *
  */
-public class Response extends ResponseFade{
+public class Response extends ResponseFacade{
 
 	private Request request;
 	private OutputStream output;
