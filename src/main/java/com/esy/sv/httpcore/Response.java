@@ -3,6 +3,7 @@ package com.esy.sv.httpcore;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -47,10 +48,10 @@ public class Response extends ResponseFacade{
 	}
 	
 	private void sendStaticResource() throws IOException {
-		File file = new File(Constants.WEB_ROOT, request.getUri());
-		if (file.exists()) {
+		try {
+			File file = new File(Constants.WEB_ROOT, request.getUri());
 			sendFile(file);
-		} else {
+		} catch (FileNotFoundException e) {
 			sendDefault();
 		}
 	}
