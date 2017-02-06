@@ -43,8 +43,6 @@ public class HttpServer {
 		try {
 			createServer();
 			handlerRequest();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ServletException e) {

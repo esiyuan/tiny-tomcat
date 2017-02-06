@@ -3,6 +3,7 @@ package com.esy.sv;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -17,23 +18,36 @@ import com.esy.sv.httpcore.Response;
  */
 public class ServletProcessor {
 	
-	public void process(Request request, Response response) throws ServletException, IOException{
-		URLClassLoader classLoader = null;
-		try {
-			try {
-				classLoader = new URLClassLoader(new URL[]{new URL("file://" + Constants.TOMCAT_CLASSLOADER_REPOSITORY)});
-				Class<?> clazz = classLoader.loadClass("web_root." + request.getServerName());
-				Servlet servlet = (Servlet)clazz.newInstance();
-				servlet.service(request, response);
-			} finally { 
-				classLoader.close();
+	private ConcurrentHashMap<String, Servlet> cache = new ConcurrentHashMap<String, Servlet>();
+	/**
+	 * servlet没有加载，则加载并初始化
+	 * <p>如有加载直接取缓存
+	 * @param request
+	 * @param response
+	 */
+	public void process(Request request, Response response){
+			Servlet servlet = cache.get(request.getServerName());
+			if(servlet != null) {
+				try {
+					servlet.service(request, response);
+				} catch (ServletException | IOException e) {
+					e.printStackTrace();
+				}
+				return;
 			}
-		} catch(ServletException e) {
-			throw e;
-		} catch(IOException e1) {
-			throw e1;
-		} catch(Exception e) {
-			e.printStackTrace();
-		} 
+			try(URLClassLoader classLoader = new URLClassLoader(new URL[]{new URL("file://" + Constants.TOMCAT_CLASSLOADER_REPOSITORY)});) {
+				Class<?> clazz = classLoader.loadClass("web_root." + request.getServerName());
+				servlet = (Servlet)clazz.newInstance();
+				servlet.init(null);
+				servlet.service(request, response);
+				cache.putIfAbsent(request.getServerName(), servlet);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.out.println("服务异常！");
+			}
 	}
 }

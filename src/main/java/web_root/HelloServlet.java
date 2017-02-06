@@ -19,8 +19,15 @@ public class HelloServlet extends HttpServlet {
 
 	public void service(ServletRequest request, ServletResponse response)
 			throws ServletException, IOException {
-		logger.info("service()");
 		PrintWriter out = response.getWriter();
-		out.println("HelloServlet.class");
+		out.println("hello servlet...");
 	}
+
+
+	@Override
+	public void init() throws ServletException {
+		System.out.println("HelloServlet..初始化开始..");
+	}
+	
+	
 }

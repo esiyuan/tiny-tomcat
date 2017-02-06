@@ -27,6 +27,9 @@ public class Request extends RequestFacade{
 		this.uri = parseUri(requestString);
 	}
 	
+	/**
+	 * 解析出servlet名字
+	 */
 	@Override
 	public String getServerName() {
 		return uri.substring(uri.lastIndexOf("/") + 1);
