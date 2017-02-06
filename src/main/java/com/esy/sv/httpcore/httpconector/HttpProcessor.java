@@ -38,16 +38,9 @@ public class HttpProcessor implements Runnable{
     }
     
     public synchronized void assign(Socket socket) {
-	  while (newSocketCome) {
-          try {
-              wait();
-          } catch (InterruptedException e) {
-          }
-      }
-      this.socket = socket;
-      newSocketCome = true;
-      notifyAll();
-      
+		this.socket = socket;
+		newSocketCome = true;
+		notifyAll();
     }
     
     private void process(Socket socket) throws IOException, ServletException {
@@ -77,7 +70,6 @@ public class HttpProcessor implements Runnable{
         }
         Socket socket = this.socket;
         newSocketCome = false;
-        notifyAll();
         return (socket);
    }
 }
