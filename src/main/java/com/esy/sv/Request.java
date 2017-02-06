@@ -21,6 +21,8 @@ public class Request {
 	public void parse() throws IOException {
 		BufferedReader reader = IOUtil.getBufferedReader(inputStream);
 		String requestString = reader.readLine();
+		if(requestString == null || requestString.length() == 0)
+			throw new IOException("请求异常！");
 		this.uri = parseUri(requestString);
 	}
 	/**
