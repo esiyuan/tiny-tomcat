@@ -40,7 +40,7 @@ public class Stack<E> {
      * @throws  EmptyStackException  if this stack is empty.
      */
     public synchronized E pop() {
-    	return list.pop();
+    	return list.poll();
     }
 
     /**

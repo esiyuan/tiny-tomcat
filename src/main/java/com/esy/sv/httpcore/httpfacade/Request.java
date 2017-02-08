@@ -1,4 +1,4 @@
-package com.esy.sv.httpcore.httpfade;
+package com.esy.sv.httpcore.httpfacade;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import com.esy.sv.common.IOUtil;
  * 本程序为了模拟tomcat实现，没有完全的实现请求信息的解析，有兴趣的可以去看tomcat源码
  * @author guanjie
  */
-public class Request extends RequestFade{
+public class Request extends RequestFacade{
 	
 	private static Logger logger = Logger.getLogger(Request.class);
 	

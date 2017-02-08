@@ -13,8 +13,8 @@ import javax.servlet.ServletException;
 import com.esy.sv.common.Constants;
 import com.esy.sv.common.IOUtil;
 import com.esy.sv.httpcore.Container;
-import com.esy.sv.httpcore.httpfade.Request;
-import com.esy.sv.httpcore.httpfade.Response;
+import com.esy.sv.httpcore.httpfacade.Request;
+import com.esy.sv.httpcore.httpfacade.Response;
 
 public class ServletContainer implements Container {
 

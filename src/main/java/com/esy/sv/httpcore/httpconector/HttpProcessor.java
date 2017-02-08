@@ -10,8 +10,8 @@ import org.apache.log4j.Logger;
 import com.esy.sv.common.Constants;
 import com.esy.sv.common.StringManager;
 import com.esy.sv.common.TomcatException;
-import com.esy.sv.httpcore.httpfade.Request;
-import com.esy.sv.httpcore.httpfade.Response;
+import com.esy.sv.httpcore.httpfacade.Request;
+import com.esy.sv.httpcore.httpfacade.Response;
 
 public class HttpProcessor implements Runnable{
 	
