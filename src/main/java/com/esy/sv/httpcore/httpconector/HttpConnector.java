@@ -54,9 +54,6 @@ public class HttpConnector implements Connector, Lifecycle, Runnable{
 	private int minProcessors = 5;
 	private int maxProcessors = 20;
 	
-	private boolean initialized;
-	private boolean started;
-	
 	private String threadName ;
 	
 	private final static StringManager sm = StringManager.getManager(Constants.HTTPCORE_PACKAGE_NAME);
@@ -92,10 +89,7 @@ public class HttpConnector implements Connector, Lifecycle, Runnable{
 	
 	@Override
 	public void start() throws TomcatException {
-		if(started)
-			throw new TomcatException(sm.getString("httpConnector.alreadyStarted"));
 		threadName = "HttpConnector[" + port + "]";
-		started = true;
 		Thread thread = new Thread(this, threadName);
 		thread.setDaemon(true);
 		thread.start();
@@ -103,9 +97,6 @@ public class HttpConnector implements Connector, Lifecycle, Runnable{
 	}
 	@Override
 	public void initialize() throws TomcatException, UnknownHostException, IOException {
-		if(initialized)
-			throw new TomcatException(sm.getString("httpConnector.alreadyInitialized"));
-		initialized = true;
 		createServer();
 		while (curProcessors < minProcessors) {
 			if ((maxProcessors > 0) && (curProcessors >= maxProcessors))

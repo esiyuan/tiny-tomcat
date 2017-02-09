@@ -49,7 +49,7 @@ public class Request extends RequestFacade{
 			requestURI = requests[1];
 		if(length >= 2)
 			protocol = requests[2];
-		logger.info("解析url--[ method : " + method + ", requestURI : " + requestURI + ", protocol : " + protocol + "]");
+//		logger.info("解析url--[ method : " + method + ", requestURI : " + requestURI + ", protocol : " + protocol + "]");
 	}
 	
 	@Override

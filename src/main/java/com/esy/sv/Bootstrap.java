@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 
 import com.esy.sv.common.TomcatException;
-import com.esy.sv.httpcore.container.ServletContainer;
+import com.esy.sv.httpcore.container.PrintHostValve;
+import com.esy.sv.httpcore.container.ServletValve;
+import com.esy.sv.httpcore.container.SimpleContainer;
 import com.esy.sv.httpcore.httpconector.HttpConnector;
 
 /**
@@ -18,8 +20,13 @@ public final class Bootstrap {
 	public static void main(String[] args) {
 		try {
 			HttpConnector connector = new HttpConnector("localhost", 8080);
-			ServletContainer container = new ServletContainer();
-			connector.setContainer(container);
+			ServletValve servletValve = new ServletValve();
+			SimpleContainer simpleContainer = new SimpleContainer();
+			
+			PrintHostValve hostValve = new PrintHostValve();
+			simpleContainer.setBasic(servletValve);
+			simpleContainer.addValve(hostValve);
+			connector.setContainer(simpleContainer);
 			connector.initialize();
 			connector.start();
 			System.in.read();

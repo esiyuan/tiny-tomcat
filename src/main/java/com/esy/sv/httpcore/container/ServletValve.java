@@ -12,11 +12,11 @@ import javax.servlet.ServletException;
 
 import com.esy.sv.common.Constants;
 import com.esy.sv.common.IOUtil;
-import com.esy.sv.httpcore.Container;
+import com.esy.sv.httpcore.Valve;
 import com.esy.sv.httpcore.httpfacade.Request;
 import com.esy.sv.httpcore.httpfacade.Response;
 
-public class ServletContainer implements Container {
+public class ServletValve implements Valve {
 
 	@Override
 	public void invoke(Request request, Response response) throws IOException,
