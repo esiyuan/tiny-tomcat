@@ -14,7 +14,11 @@ import com.esy.sv.common.StringManager;
 import com.esy.sv.common.TomcatException;
 import com.esy.sv.httpcore.Connector;
 import com.esy.sv.httpcore.Container;
-import com.esy.sv.httpcore.Lifecycle;
+import com.esy.sv.httpcore.lifecycle.Lifecycle;
+import com.esy.sv.httpcore.lifecycle.LifecycleEnum;
+import com.esy.sv.httpcore.lifecycle.LifecycleListener;
+import com.esy.sv.httpcore.lifecycle.LifecycleSupport;
+import com.esy.sv.httpcore.lifecycle.SimpleLifecyleListener;
 /**
  * 接受请求和处理请求在同一个线程，那么会阻塞并发请求，使得系统吞吐率低下
  * 为了进一步实现高效的服务器程序，需要把费时的处理操作单独分离出去，作为独立的线程
@@ -32,17 +36,9 @@ public class HttpConnector implements Connector, Lifecycle, Runnable{
 	public void stop() {
 		throw new UnsupportedOperationException();
 	}
-
-
-	@Override
-	public Container getContainer() {
-		return container;
-	}
-	@Override
-	public void setContainer(Container container) {
-		this.container = container;
-	}
-
+	
+	private LifecycleSupport lifecycle = new LifecycleSupport(this);
+	
 	public HttpConnector(String host, int port) {
 		this.host = host;
 		this.port = port;
@@ -94,6 +90,7 @@ public class HttpConnector implements Connector, Lifecycle, Runnable{
 	public void start() throws TomcatException {
 		if(started)
 			throw new TomcatException(sm.getString("httpConnector.alreadyStarted"));
+		lifecycle.fireLifecycleEvent(LifecycleEnum.START_EVENT, "连接器");
 		threadName = "HttpConnector[" + port + "]";
 		started = true;
 		Thread thread = new Thread(this, threadName);
@@ -139,13 +136,43 @@ public class HttpConnector implements Connector, Lifecycle, Runnable{
 	}
 	}
 	
+	private LifecycleListener lifecyleListener = new SimpleLifecyleListener();
 	private HttpProcessor newProcessor() {
 		HttpProcessor processor = new HttpProcessor(this, curProcessors++);
+		processor.addLifecycleListener(lifecyleListener);
 			try {
 				processor.start();
 			} catch (TomcatException e) {
 				return (null);
 			}
 		return processor;
+	}
+
+
+	@Override
+	public void addLifecycleListener(LifecycleListener listener) {
+		lifecycle.addLifecycleListener(listener);
+	}
+
+
+	@Override
+	public LifecycleListener[] findLifecycleListeners() {
+		return lifecycle.findLifecycleListeners();
+	}
+
+
+	@Override
+	public void removeLifecycleListener(LifecycleListener listener) {
+		lifecycle.removeLifecycleListener(listener);
+	}
+	
+	
+	@Override
+	public Container getContainer() {
+		return container;
+	}
+	@Override
+	public void setContainer(Container container) {
+		this.container = container;
 	}
 }

@@ -10,13 +10,19 @@ import org.apache.log4j.Logger;
 import com.esy.sv.common.Constants;
 import com.esy.sv.common.StringManager;
 import com.esy.sv.common.TomcatException;
-import com.esy.sv.httpcore.httpfade.Request;
-import com.esy.sv.httpcore.httpfade.Response;
+import com.esy.sv.httpcore.httpfacade.Request;
+import com.esy.sv.httpcore.httpfacade.Response;
+import com.esy.sv.httpcore.lifecycle.Lifecycle;
+import com.esy.sv.httpcore.lifecycle.LifecycleEnum;
+import com.esy.sv.httpcore.lifecycle.LifecycleListener;
+import com.esy.sv.httpcore.lifecycle.LifecycleSupport;
 
-public class HttpProcessor implements Runnable{
+public class HttpProcessor implements Runnable, Lifecycle{
 	
 	private static Logger logger = Logger.getLogger(HttpProcessor.class);
 	private HttpConnector connector;
+	
+	private LifecycleSupport lifecycle = new LifecycleSupport(this);
 	
 	private final int id;
 	
@@ -35,6 +41,7 @@ public class HttpProcessor implements Runnable{
     public void start() throws TomcatException {
         if (started)
             throw new TomcatException(sm.getString("httpProcessor.alreadyStarted"));
+        lifecycle.fireLifecycleEvent(LifecycleEnum.START_EVENT, "servlet处理器");
         started = true;
         logger.info(sm.getString("httpProcessor.starting") + " HttpProcessor " + id);
         Thread thread = new Thread(this, "HttpProcessor " + id);
@@ -91,4 +98,26 @@ public class HttpProcessor implements Runnable{
         notifyAll();
         return (socket);
    }
+
+	@Override
+	public void addLifecycleListener(LifecycleListener listener) {
+		lifecycle.addLifecycleListener(listener);
+	}
+
+	@Override
+	public LifecycleListener[] findLifecycleListeners() {
+		return lifecycle.findLifecycleListeners();
+	}
+
+	@Override
+	public void removeLifecycleListener(LifecycleListener listener) {
+		lifecycle.removeLifecycleListener(listener);
+	}
+
+	@Override
+	public void stop() throws TomcatException {
+		throw new UnsupportedOperationException();
+	}
+	
+	
 }

@@ -1,4 +1,4 @@
-package com.esy.sv.httpcore.httpfade;
+package com.esy.sv.httpcore.httpfacade;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -10,7 +10,7 @@ import com.esy.sv.common.IOUtil;
  * @author guanjie
  *
  */
-public class Response extends ResponseFade{
+public class Response extends ResponseFacade{
 
 	private Request request;
 	private OutputStream output;

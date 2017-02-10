@@ -1,4 +1,4 @@
-package com.esy.sv.httpcore.httpfade;
+package com.esy.sv.httpcore.httpfacade;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class RequestFade implements HttpServletRequest{
+public class RequestFacade implements HttpServletRequest{
 
 	@Override
 	public Object getAttribute(String name) {

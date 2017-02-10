@@ -1,4 +1,4 @@
-package com.esy.sv.httpcore.httpfade;
+package com.esy.sv.httpcore.httpfacade;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -8,7 +8,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-public class ResponseFade implements HttpServletResponse{
+public class ResponseFacade implements HttpServletResponse{
 
 	@Override
 	public String getCharacterEncoding() {

@@ -9,8 +9,8 @@ import com.esy.sv.httpcore.Contained;
 import com.esy.sv.httpcore.Container;
 import com.esy.sv.httpcore.Valve;
 import com.esy.sv.httpcore.ValveContext;
-import com.esy.sv.httpcore.httpfade.Request;
-import com.esy.sv.httpcore.httpfade.Response;
+import com.esy.sv.httpcore.httpfacade.Request;
+import com.esy.sv.httpcore.httpfacade.Response;
 
 public class ServletVavle  implements Valve, Contained{
 	

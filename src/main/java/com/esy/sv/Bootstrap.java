@@ -10,6 +10,8 @@ import com.esy.sv.httpcore.container.SimplePipeline;
 import com.esy.sv.httpcore.container.SimpleValve;
 import com.esy.sv.httpcore.container.SimpleWrapper;
 import com.esy.sv.httpcore.httpconector.HttpConnector;
+import com.esy.sv.httpcore.lifecycle.LifecycleListener;
+import com.esy.sv.httpcore.lifecycle.SimpleLifecyleListener;
 
 /**
  * 服务器启动类 本节服务器更加模块化，分离出了连接器模块，想正式的tomcat实现靠拢，能处理更为复杂的servlet请求
@@ -22,6 +24,9 @@ public final class Bootstrap {
 	public static void main(String[] args) {
 		try {
 			HttpConnector connector = new HttpConnector("localhost", 8080);
+			LifecycleListener lifecyleListener = new SimpleLifecyleListener();
+			connector.addLifecycleListener(lifecyleListener);
+			
 			Wrapper wrapper = new SimpleWrapper();
 			Pipeline pipeline = new SimplePipeline(wrapper);
 			connector.setContainer(wrapper);

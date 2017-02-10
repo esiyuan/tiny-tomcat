@@ -9,8 +9,8 @@ import com.esy.sv.httpcore.Container;
 import com.esy.sv.httpcore.Loader;
 import com.esy.sv.httpcore.Pipeline;
 import com.esy.sv.httpcore.Wrapper;
-import com.esy.sv.httpcore.httpfade.Request;
-import com.esy.sv.httpcore.httpfade.Response;
+import com.esy.sv.httpcore.httpfacade.Request;
+import com.esy.sv.httpcore.httpfacade.Response;
 
 public class SimpleWrapper implements Wrapper{
 
